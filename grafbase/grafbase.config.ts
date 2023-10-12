@@ -3,7 +3,7 @@ import { g, auth, config } from "@grafbase/sdk";
 // const authProvider = auth.OpenIDConnect({
 //   issuer: process.env.ISSUER_URL ?? ''
 // })
-//
+// 
 // Define Data Models
 // https://grafbase.com/docs/database
 
