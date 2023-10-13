@@ -5,19 +5,46 @@ import Image from "next/image";
 import FormField from "@/components/FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "@/components/CustomMenu";
+import Button from "@/components/Button";
 
 type Props = {
   type: string;
   session: SessionInterface;
 };
 const ProjectForm = ({ type, session }: Props) => {
-  const handleFormSubmit = (e: React.FormEvent) => {};
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      if (type === "create") {
+        //create project
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleStateChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  //gonna upload to cloudinary server
+  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.includes("image"))
+      return alert("Please upload an image file");
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      handleStateChange("image", result);
+    };
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [form, setForm] = useState({
     image: "",
     title: "",
@@ -38,7 +65,8 @@ const ProjectForm = ({ type, session }: Props) => {
           type="file"
           accept="image/*"
           required={type === "create" ? true : false}
-          onChange={handleChangeImage}
+          className="form_image-input"
+          onChange={(e) => handleChangeImage(e)}
         />
         {form.image && (
           <Image
@@ -88,7 +116,16 @@ const ProjectForm = ({ type, session }: Props) => {
       />
 
       <div className="flexStart w-full">
-        <button>Create</button>
+        <Button
+          title={
+            isSubmitting
+              ? `${type === "create" ? "Creating" : "Editing"}`
+              : `${type === "create" ? "Create" : "Edit"}`
+          }
+          type="submit"
+          leftIcon={isSubmitting ? "" : "/plus.svg"}
+          isSubmitting={isSubmitting}
+        />
       </div>
     </form>
   );
