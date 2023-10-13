@@ -4,6 +4,8 @@ import Image from "next/image";
 import { NavLinks } from "@/constants";
 import AuthProviders from "./AuthProviders";
 import { getCurrentUser } from "@/lib/session";
+import { signOut } from "next-auth/react"
+import ProfileMenu from "./ProfileMenu";
 
 const Navbar = async () => {
   // //build a test session for office old no local grafbase db mac
@@ -32,21 +34,11 @@ const Navbar = async () => {
         </ul>
       </div>
 
-      <div>
+      <div className="flexCenter gap-4">
         {session?.user ? (
           <>
-            {session?.user?.image && (
-              <Link href={`/profile/${session?.user?.id}`}>
-                <Image
-                  className="rounded-full"
-                  src={session.user.image}
-                  alt={session.user.name}
-                  width={40}
-                  height={40}
-                />
-              </Link>
-            )}
-            <Link href={"/create-project"}>Share Work</Link>
+            <ProfileMenu session={session} />
+            <Link href="/create-project">Share Work</Link>
           </>
         ) : (
           <AuthProviders />
