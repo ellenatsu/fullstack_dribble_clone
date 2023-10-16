@@ -1,5 +1,10 @@
 import { ProjectForm } from "@/common.types";
-import { getUserQuery, createUserMutation } from "@/graphql";
+import {
+  getUserQuery,
+  createUserMutation,
+  createProjectMutation,
+  projectsQuery,
+} from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -39,10 +44,25 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
   client.setHeader("x-api-key", apiKey);
   return makeGraphQLRequest(createUserMutation, variables);
 };
+
+export const fetchToken = async () => {
+  try {
+    //fetch the token from nextAuth Endpoint
+    const response = await fetch(`${serverUrl}/api/auth/token`);
+    return response.json();
+  } catch (err) {
+    throw err;
+  }
+};
 //upload image t
 export const uploadImage = async (imagePath: string) => {
   try {
-    const response = await fetch(`${serverUrl}/api/upload`, {});
+    //the route is at app/api/upload/route.ts
+    const response = await fetch(`${serverUrl}/api/upload`, {
+      method: "POST",
+      body: JSON.stringify({ path: imagePath }),
+    });
+    return response.json();
   } catch (err) {
     throw err;
   }
@@ -52,5 +72,27 @@ export const createNewProject = async (
   creatorId: string,
   token: string
 ) => {
-  const imageUrl = await uploadImage(form.image, token);
+  const imageUrl = await uploadImage(form.image);
+  if (imageUrl.url) {
+    //give the token to the server to verify user
+    client.setHeader("Authorization", `Bearer ${token}`);
+
+    const variables = {
+      ...form,
+      image: imageUrl.url,
+      createdById: {
+        link: creatorId,
+      },
+    };
+    return makeGraphQLRequest(createProjectMutation, variables);
+  }
+};
+
+export const fetchAllProjects = async (
+  category?: string,
+  endcursor?: string
+) => {
+  client.setHeader("x-api-key", apiKey);
+
+  return makeGraphQLRequest(projectsQuery, { category, endcursor });
 };
