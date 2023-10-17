@@ -9,18 +9,18 @@ import { SessionInterface } from "@/common.types";
 
 const Navbar = async () => {
   //build a test session for office old no local grafbase db mac
-  const session: SessionInterface = {
-    user: {
-      id: "12345",
-      name: "Meow Meow",
-      email: "john.doe@example.com",
-      image: "https://i.ibb.co/XCBbpD6/avatar.jpg",
-      avatarUrl: "https://i.ibb.co/XCBbpD6/avatar.jpg",
-    },
-    expires: "",
-  };
+  // const session: SessionInterface = {
+  //   user: {
+  //     id: "12345",
+  //     name: "Meow Meow",
+  //     email: "john.doe@example.com",
+  //     image: "https://i.ibb.co/XCBbpD6/avatar.jpg",
+  //     avatarUrl: "https://i.ibb.co/XCBbpD6/avatar.jpg",
+  //   },
+  //   expires: "",
+  // };
 
-  //const session = await getCurrentUser();
+  const session = await getCurrentUser();
   return (
     <nav className="flexBetween navba">
       <div className="flex-1 flexStart gap-10">

@@ -78,20 +78,20 @@ export const createNewProject = async (
     client.setHeader("Authorization", `Bearer ${token}`);
 
     const variables = {
-      ...form,
-      image: imageUrl.url,
-      createdById: {
-        link: creatorId,
-      },
+      input: { 
+        ...form, 
+        image: imageUrl.url, 
+        createdBy: { 
+          link: creatorId 
+        }
+      }
     };
+
     return makeGraphQLRequest(createProjectMutation, variables);
   }
 };
 
-export const fetchAllProjects = async (
-  category?: string,
-  endcursor?: string
-) => {
+export const fetchAllProjects = (category?: string, endcursor?: string ) => {
   client.setHeader("x-api-key", apiKey);
 
   return makeGraphQLRequest(projectsQuery, { category, endcursor });
