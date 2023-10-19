@@ -4,6 +4,8 @@ import {
   createUserMutation,
   createProjectMutation,
   projectsQuery,
+  getProjectByIdQuery,
+  getProjectsOfUserQuery,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -96,3 +98,13 @@ export const fetchAllProjects = (category?: string, endcursor?: string ) => {
 
   return makeGraphQLRequest(projectsQuery, { category, endcursor });
 };
+
+export const getProjectDetails = (id: string) => {
+  client.setHeader("x-api-key", apiKey);
+  return makeGraphQLRequest(getProjectByIdQuery, {id})
+}
+
+export const getUserProjects = (id: string, last?:number) => {
+  client.setHeader("x-api-key", apiKey);
+  return makeGraphQLRequest(getProjectsOfUserQuery, {i, last})
+}
