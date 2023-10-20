@@ -106,5 +106,5 @@ export const getProjectDetails = (id: string) => {
 
 export const getUserProjects = (id: string, last?:number) => {
   client.setHeader("x-api-key", apiKey);
-  return makeGraphQLRequest(getProjectsOfUserQuery, {i, last})
+  return makeGraphQLRequest(getProjectsOfUserQuery, {id, last})
 }

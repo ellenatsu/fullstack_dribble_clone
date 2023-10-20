@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Modal from "@/components/Modal"
 import RelatedProjects from '@/components/RelatedProjects';
+import ProjectActions from '@/components/ProjectActions';
 
 type Props = {
     params: {
@@ -40,12 +41,17 @@ const Project = async ({params}: Props) => {
                 <div className="flex-1 flexStart flex-col gap-1">
                     <p className="self-start text-lg font-semibold">{projectDetails?.title}</p>
                     <div className='user-info'>
-                    <Link href='/'>{projectDetails?.createdBy.name}</Link>
-                    <Image src="/dot.svg" width={4} height={4} alt='dot' />
-                    <Link href={`/?category=${projectDetails?.category}`} className="text-primary-purple font-semibold">{projectDetails?.category}</Link>
-                </div>
+                      <Link href='/'>{projectDetails?.createdBy.name}</Link>
+                      <Image src="/dot.svg" width={4} height={4} alt='dot' />
+                      <Link href={`/?category=${projectDetails?.category}`} className="text-primary-purple font-semibold">{projectDetails?.category}</Link>
+                    </div>
                 </div>            
             </div>
+            { session?.user?.id === projectDetails?.createdBy?.id && (
+                <div className='flex justify-end items-center gap-2'>
+                    <ProjectActions projectId={projectDetails?.id || ""} />
+                </div>
+            )}
         </section>
         <section className="mt-14 bg-slate-200">
             <Image src={`${projectDetails?.image}`} width={1064} height={798} alt='project poster' className="object-cover rounded-2xl" />
@@ -69,18 +75,18 @@ const Project = async ({params}: Props) => {
             <span className='w-full h-0.5 bg-light-white-200'/>
                 <Link href='/' className='min-w-[82px] h-[82px]'>
                     {projectDetails?.createdBy?.avatarUrl && (
-                        <Image
-                            src={projectDetails.createdBy.avatarUrl}
-                            width={80}
-                            height={80}
-                            alt="profile image"
-                            className="rounded-full"
-                        />
-                    )}
-                </Link>
-            <span className='w-full h-0.5 bg-light-white-200'/>
-        </section>
-        <RelatedProjects userId={projectDetails?.createdBy?.id} projectedId={projectDetails?.id} />
+                                        <Image
+                                            src={projectDetails?.createdBy?.avatarUrl || ""}
+                                            width={80}
+                                            height={80}
+                                            alt="profile image"
+                                            className="rounded-full"
+                                        />
+                                    )}
+                                </Link>
+                            <span className='w-full h-0.5 bg-light-white-200'/>
+                        </section>
+                        <RelatedProjects userId={projectDetails?.createdBy?.id || ""} projectId={projectDetails?.id || ""} />
     </Modal>
   )
 }
