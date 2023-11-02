@@ -1,19 +1,20 @@
 "use client";
 import { useState } from "react";
-import { SessionInterface } from "@/common.types";
+import { ProjectInterface, SessionInterface } from "@/common.types";
 import Image from "next/image";
 import FormField from "@/components/FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "@/components/CustomMenu";
 import Button from "@/components/Button";
-import { createNewProject, fetchToken } from "@/lib/actions";
+import { createNewProject, fetchToken, updateProject } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
 type Props = {
   type: string;
   session: SessionInterface;
+  project?: ProjectInterface;
 };
-const ProjectForm = ({ type, session }: Props) => {
+const ProjectForm = ({ type, session, project }: Props) => {
   const router = useRouter();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -26,6 +27,11 @@ const ProjectForm = ({ type, session }: Props) => {
         await createNewProject(form, session?.user?.id, token);
         router.push("/");
       }
+      if ( type === "edit") {
+        //edit project
+        await updateProject(form, project?.id as string, token);
+        router.push("/");
+      } 
     } catch (error) {
       console.log(error);
     }
@@ -53,12 +59,12 @@ const ProjectForm = ({ type, session }: Props) => {
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [form, setForm] = useState({
-    image: "",
-    title: "",
-    description: "",
-    liveSiteUrl: "",
-    githubUrl: "",
-    category: "",
+    image: project?.image ||"",
+    title: project?.title ||"",
+    description: project?.description ||"",
+    liveSiteUrl: project?.liveSiteUrl ||"",
+    githubUrl: project?.githubUrl ||"",
+    category: project?.category ||"",
   });
 
   return (
@@ -139,3 +145,7 @@ const ProjectForm = ({ type, session }: Props) => {
 };
 
 export default ProjectForm;
+function editProject(form: { image: string; title: string; description: string; liveSiteUrl: string; githubUrl: string; category: string; }, id: string | undefined, token: any) {
+  throw new Error("Function not implemented.");
+}
+
