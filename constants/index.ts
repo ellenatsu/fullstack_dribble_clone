@@ -10,16 +10,13 @@ export const categoryFilters = [
   "Frontend",
   "Backend",
   "Full-Stack",
+  "ArtWork",
   "Mobile",
   "UI/UX",
   "Game Dev",
   "DevOps",
   "Data Science",
   "Machine Learning",
-  "Cybersecurity",
-  "Blockchain",
-  "E-commerce",
-  "Chatbots",
 ];
 
 export const footerLinks = [
@@ -30,9 +27,6 @@ export const footerLinks = [
       "Explore development work",
       "Development blog",
       "Code podcast",
-      "Open-source projects",
-      "Refer a Friend",
-      "Code of conduct",
     ],
   },
   {
@@ -53,12 +47,6 @@ export const footerLinks = [
       "About",
       "Careers",
       "Support",
-      "Media kit",
-      "Testimonials",
-      "API",
-      "Terms of service",
-      "Privacy policy",
-      "Cookie policy",
     ],
   },
   {
@@ -67,8 +55,6 @@ export const footerLinks = [
       "Development jobs",
       "Developers for hire",
       "Freelance developers for hire",
-      "Tags",
-      "Places",
     ],
   },
   {
@@ -87,8 +73,6 @@ export const footerLinks = [
       "Development Hiring",
       "Development Portfolio",
       "Development Education",
-      "Creative Process",
-      "Development Industry Trends",
     ],
   },
 ];
