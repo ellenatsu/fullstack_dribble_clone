@@ -17,11 +17,11 @@ const LoadMore = ( { startCursor, endCursor, hasNextPage, hasPreviousPage } : Pr
     const currentParams = new URLSearchParams(window.location.search);
 
     if(direction === 'next' && hasNextPage) {
-      currentParams.delete('startcursor');
-      currentParams.set('startcursor', endCursor);
-    } else if (direction === 'previous' && hasPreviousPage){
-      currentParams.delete('endcursor');
-       currentParams.set('endcursor', startCursor);
+      currentParams.delete('startCursor');
+      currentParams.set('endCursor', endCursor);
+    } else if (direction === 'first' && hasPreviousPage){
+      currentParams.delete('endCursor');
+       currentParams.set('startCursor', startCursor);
     }
 
     const newSearchParams = currentParams.toString();
@@ -34,12 +34,12 @@ const LoadMore = ( { startCursor, endCursor, hasNextPage, hasPreviousPage } : Pr
     <div className='w-full flexCenter gap-5 mt-10'>
       {hasPreviousPage && (
         <Button
-          title="Previous" handleClick={()=> handleNavigation('previous')}
+          title="First Page" handleClick={()=> handleNavigation('first')}
         />
       )}
       {hasNextPage && (
         <Button
-          title="Next" handleClick={()=> handleNavigation('next')}
+          title="Next Page" handleClick={()=> handleNavigation('next')}
         />
       )}
     </div>
