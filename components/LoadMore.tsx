@@ -18,10 +18,10 @@ const LoadMore = ( { startCursor, endCursor, hasNextPage, hasPreviousPage } : Pr
 
     if(direction === 'next' && hasNextPage) {
       currentParams.delete('startcursor');
-      currentParams.set('endcursor', endCursor);
+      currentParams.set('startcursor', endCursor);
     } else if (direction === 'previous' && hasPreviousPage){
       currentParams.delete('endcursor');
-       currentParams.set('startcursor', startCursor);
+       currentParams.set('endcursor', startCursor);
     }
 
     const newSearchParams = currentParams.toString();
