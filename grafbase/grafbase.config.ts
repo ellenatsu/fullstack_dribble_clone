@@ -34,6 +34,8 @@ const Project = g
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),
+    views: g.int().default(0), 
+    likes: g.int().default(0), 
     createdBy: g.relation(() => User).optional(),
   })
   .auth((rules) => {

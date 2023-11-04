@@ -35,6 +35,8 @@ export const createProjectMutation = `
 				id
 				title
 				description
+        views
+        likes
 				createdBy {
 					email
 					name
@@ -87,6 +89,8 @@ export const getProjectsByCategory = `
           id
           image
           category
+          views
+          likes
           createdBy {
             id
             email
@@ -117,6 +121,8 @@ export const projectsQuery = `
           id
           image
           category
+          views
+          likes
           createdBy {
             id
             email
@@ -140,6 +146,8 @@ export const getProjectByIdQuery = `
       liveSiteUrl
       githubUrl
       category
+      views
+      likes
       createdBy {
         id
         name
@@ -166,6 +174,8 @@ export const getProjectsOfUserQuery = `
             id
             title
             image
+            views
+            likes
           }
         }
       }
