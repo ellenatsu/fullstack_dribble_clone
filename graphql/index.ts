@@ -53,6 +53,8 @@ export const updateProjectMutation = `
 				id
 				title
 				description
+        views
+        likes
 				createdBy {
 					email
 					name

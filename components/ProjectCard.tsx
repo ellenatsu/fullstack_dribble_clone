@@ -5,12 +5,14 @@ type Props = {
     id: string;
     image: string;
     title: string;
+    views: number;
+    likes: number;
     name: string;
     avatarUrl: string;
     userId: string;
 }
 
-const ProjectCard = ({id, image, title, name, avatarUrl, userId} : Props) => {
+const ProjectCard = ({id, image, title, views, likes, name, avatarUrl, userId} : Props) => {
   return (
     <div className="flexStart flex-col rounded-2xl drop-shadow-card">
         <Link href={`/project/${id}`} className="flexCenter group relative w-full h-full">
@@ -34,11 +36,11 @@ const ProjectCard = ({id, image, title, name, avatarUrl, userId} : Props) => {
           <div className="flexCenter gap-3">
             <div className="flexCenter gap-2">
               <Image src="/heart.svg" width={13} height={12} alt="liked" />
-              <p className="text-sm">23</p>
+              <p className="text-sm">{likes}</p>
             </div>
             <div className="flexCenter gap-2">
               <Image src="/eye.svg" width={13} height={12} alt="viewed" />
-              <p className="text-sm">1.2k</p>
+              <p className="text-sm">{views}</p>
             </div>
           </div>
         </div>

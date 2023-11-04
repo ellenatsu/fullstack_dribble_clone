@@ -146,3 +146,33 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
   client.setHeader("Authorization", `Bearer ${token}`);
   return makeGraphQLRequest(updateProjectMutation, variables)
 }
+
+export const updateProjectViews = async (projectId: string) => {
+  //first check if image changed
+  
+  const variables = {
+    id: projectId,
+    input: {
+      views: {
+        "increment": 1
+      }
+    }
+  }
+
+  //client.setHeader("Authorization", `Bearer ${token}`);
+  return makeGraphQLRequest(updateProjectMutation, variables)
+}
+
+export const updateProjectLikes = async (projectId: string, liked: boolean) => {
+  //first check if image changed
+  const newLikes = liked? { "increment": 1 } : { "decrement": 1 };
+  const variables = {
+    id: projectId,
+    input: {
+      likes: newLikes
+    }
+  }
+
+  //client.setHeader("Authorization", `Bearer ${token}`);
+  return makeGraphQLRequest(updateProjectMutation, variables)
+}

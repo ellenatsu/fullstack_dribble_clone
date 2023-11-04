@@ -1,17 +1,33 @@
 import { ProjectInterface } from '@/common.types';
-import { getProjectDetails } from '@/lib/actions';
+import { fetchToken, getProjectDetails, updateProject, updateProjectViews } from '@/lib/actions';
 import { getCurrentUser } from '@/lib/session'
 import Image from "next/image"
 import Link from "next/link"
 import Modal from "@/components/Modal"
 import RelatedProjects from '@/components/RelatedProjects';
 import ProjectActions from '@/components/ProjectActions';
+import UserActions from '@/components/UserActions';
 
 type Props = {
     params: {
         id: string;
     }
 }
+
+async function incrementProjectViews(projectId: string | undefined, views: number) {
+    if (!projectId) {
+      return;
+    }
+    const newViews = views + 1;
+    //const { token } = await fetchToken();
+    try {
+      await updateProjectViews(projectId as string);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+  
 const Project = async ({params}: Props) => {
   //create session to get project details
   const session = await getCurrentUser();
@@ -22,6 +38,9 @@ const Project = async ({params}: Props) => {
     <p>Failed to fetch project information.</p>
   }
   const projectDetails = result?.project;
+  
+  //when click inside the detail page, views add 1
+  incrementProjectViews(params.id, projectDetails?.views as number);
 
   return (
     <Modal>
@@ -41,7 +60,7 @@ const Project = async ({params}: Props) => {
                 <div className="flex-1 flexStart flex-col gap-1">
                     <p className="self-start text-lg font-semibold">{projectDetails?.title}</p>
                     <div className='user-info'>
-                      <Link href='/'>{projectDetails?.createdBy.name}</Link>
+                      <Link href={`/profile/${projectDetails?.createdBy?.id}`}>{projectDetails?.createdBy.name}</Link>
                       <Image src="/dot.svg" width={4} height={4} alt='dot' />
                       <Link href={`/?category=${projectDetails?.category}`} className="text-primary-purple font-semibold">{projectDetails?.category}</Link>
                     </div>
@@ -69,24 +88,27 @@ const Project = async ({params}: Props) => {
                 🚀 <span className='underline'>Live Site</span>
                 </Link>
             </div>
+            <div className="flex mt-2 gap-2">
+              <UserActions projectId={projectDetails?.id || ""}/>
+            </div>
         </section>
 
         <section className='flexCenter w-full gap-8 mt-28'>
             <span className='w-full h-0.5 bg-light-white-200'/>
-                <Link href='/' className='min-w-[82px] h-[82px]'>
-                    {projectDetails?.createdBy?.avatarUrl && (
-                                        <Image
-                                            src={projectDetails?.createdBy?.avatarUrl || ""}
-                                            width={80}
-                                            height={80}
-                                            alt="profile image"
-                                            className="rounded-full"
-                                        />
-                                    )}
-                                </Link>
-                            <span className='w-full h-0.5 bg-light-white-200'/>
-                        </section>
-                        <RelatedProjects userId={projectDetails?.createdBy?.id || ""} projectId={projectDetails?.id || ""} />
+            <Link href='/' className='min-w-[82px] h-[82px]'>
+                {projectDetails?.createdBy?.avatarUrl && (
+                    <Image
+                        src={projectDetails?.createdBy?.avatarUrl || ""}
+                        width={80}
+                        height={80}
+                        alt="profile image"
+                        className="rounded-full"
+                    />
+                )}
+            </Link>
+            <span className='w-full h-0.5 bg-light-white-200'/>
+        </section>
+        <RelatedProjects userId={projectDetails?.createdBy?.id || ""} projectId={projectDetails?.id || ""} />
     </Modal>
   )
 }

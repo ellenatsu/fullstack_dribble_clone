@@ -56,6 +56,8 @@ const Home = async ({ searchParams: {category, endCursor}} : Props) => {
             id={node?.id}
             image={node?.image}
             title={node?.title}
+            views={node?.views}
+            likes={node?.likes}
             name={node?.createdBy?.name}
             avatarUrl={node?.createdBy?.avatarUrl}
             userId={node?.createdBy?.id}
