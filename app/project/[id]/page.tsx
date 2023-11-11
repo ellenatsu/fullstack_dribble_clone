@@ -1,12 +1,14 @@
 import { ProjectInterface } from '@/common.types';
-import { fetchToken, getProjectDetails, updateProject, updateProjectViews } from '@/lib/actions';
+import { getProjectDetails, updateProjectViews } from '@/lib/actions';
 import { getCurrentUser } from '@/lib/session'
 import Image from "next/image"
 import Link from "next/link"
 import Modal from "@/components/Modal"
 import RelatedProjects from '@/components/RelatedProjects';
 import ProjectActions from '@/components/ProjectActions';
-import UserActions from '@/components/UserActions';
+import UserLikeBtn from '@/components/UserLikeBtn';
+import { likeBtnHandler } from './UserActions';
+
 
 type Props = {
     params: {
@@ -18,8 +20,6 @@ async function incrementProjectViews(projectId: string | undefined, views: numbe
     if (!projectId) {
       return;
     }
-    const newViews = views + 1;
-    //const { token } = await fetchToken();
     try {
       await updateProjectViews(projectId as string);
     }
@@ -33,7 +33,11 @@ const Project = async ({params}: Props) => {
   const session = await getCurrentUser();
   //result on server side, 
   const result = await getProjectDetails(params.id) as {project? : ProjectInterface}; 
-
+  
+ 
+  //get if user like or no
+  const curlikedProjectIds = session?.user?.likedProjectIds || [];
+ 
   if(!result?.project) {
     <p>Failed to fetch project information.</p>
   }
@@ -89,7 +93,7 @@ const Project = async ({params}: Props) => {
                 </Link>
             </div>
             <div className="flex mt-2 gap-2">
-              <UserActions projectId={projectDetails?.id || ""}/>
+            <UserLikeBtn projectId={projectDetails?.id || ""} userId={session?.user?.id} likedProjectIds={curlikedProjectIds} likeBtnHandler={likeBtnHandler} />
             </div>
         </section>
 

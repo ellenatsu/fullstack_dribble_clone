@@ -18,11 +18,17 @@ const User = g
     linkedinUrl: g.url().optional(),
     projects: g
       .relation(() => Project)
+      .name('created')
       .list()
+      .optional(),  
+    likedProjectIds: g   //list of liked project id
+      .string().list()
       .optional(),
+    
   })
   .auth((rules) => {
     rules.public().read();
+    rules.private().update().delete();
   });
 
 // @ts-ignore
@@ -36,7 +42,7 @@ const Project = g
     category: g.string().search(),
     views: g.int().default(0), 
     likes: g.int().default(0), 
-    createdBy: g.relation(() => User).optional(),
+    createdBy: g.relation(() => User).name('created').optional(),
   })
   .auth((rules) => {
     rules.public().read();

@@ -164,3 +164,50 @@ body {
 .profile_projects {
   @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 mt-5;
 }
+
+
+/*for svg animation*/
+svg path{
+  fill: transparent;
+  stroke-width: 2;
+  stroke: rgb(74, 70, 69);
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+svg.liked path{ 
+  stroke: tomato;
+  fill: tomato;
+}
+
+svg.heart-fill-animation path{
+  stroke: tomato;
+  animation: fill-heart 2s Linear forwards;
+}
+
+@keyframes fill-heart{
+  0%{
+    stroke-dashoffset: 0;
+  }
+  40%{
+    stroke-dashoffset: 60;
+  }
+  80%{
+    stroke-dashoffset: 120;
+    fill:transparent
+  }
+  100%{
+    stroke-dashoffset: 1200;
+    fill:tomato
+  }
+}
+
+svg.heart-unfill-animation {
+  animation: unfill-heart 0.5s forwards;
+}
+
+@keyframes unfill-heart {
+  from { fill: tomato; }
+  to { fill: none; }
+}
+

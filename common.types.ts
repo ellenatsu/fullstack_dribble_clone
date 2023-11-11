@@ -35,6 +35,7 @@ export interface UserProfile {
   avatarUrl: string;
   githubUrl: string | null;
   linkedinUrl: string | null;
+  likedProjectIds: string[] | [];
   projects: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
@@ -43,8 +44,8 @@ export interface UserProfile {
       startCursor: string;
       endCursor: string;
     };
-  };
-}
+  }
+};
 
 export interface SessionInterface extends Session {
   user: User & {
@@ -52,6 +53,7 @@ export interface SessionInterface extends Session {
     name: string;
     email: string;
     avatarUrl: string;
+    likedProjectIds: string[] | [];
   };
 }
 

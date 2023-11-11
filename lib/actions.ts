@@ -9,6 +9,7 @@ import {
   deleteProjectMutation,
   updateProjectMutation,
   getProjectsByCategory,
+  updateUserMutation,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -158,21 +159,36 @@ export const updateProjectViews = async (projectId: string) => {
       }
     }
   }
-
   //client.setHeader("Authorization", `Bearer ${token}`);
+  client.setHeader("x-api-key", apiKey);
   return makeGraphQLRequest(updateProjectMutation, variables)
 }
 
-export const updateProjectLikes = async (projectId: string, liked: boolean) => {
+export const updateProjectLikes = async (projectId: string, liked: boolean, token: string) => {
   //first check if image changed
-  const newLikes = liked? { "increment": 1 } : { "decrement": 1 };
+  let newLikes = liked ? { increment: 1 } : { decrement: 1 };
+  
   const variables = {
     id: projectId,
     input: {
       likes: newLikes
     }
   }
-
   //client.setHeader("Authorization", `Bearer ${token}`);
+  client.setHeader("x-api-key", apiKey);
   return makeGraphQLRequest(updateProjectMutation, variables)
+}
+
+export const updateUserLikes = async (likedProjectIds: string[], userId: string, token: string) => {
+  //first check if image changed
+
+  const variables = {
+    id: userId,
+    input: {
+      likedProjectIds: likedProjectIds
+    }
+  }
+  client.setHeader("Authorization", `Bearer ${token}`);
+  //client.setHeader("x-api-key", apiKey);
+  return makeGraphQLRequest(updateUserMutation, variables)
 }

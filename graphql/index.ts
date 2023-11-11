@@ -8,6 +8,7 @@ export const getUserQuery = `
       description
       githubUrl
       linkedinUrl
+      likedProjectIds
     }
   }
 `;
@@ -23,9 +24,21 @@ export const createUserMutation = `
               githubUrl
               linkedinUrl
               id
+              likedProjectIds
             }
         }
     }
+`;
+
+export const updateUserMutation = `
+	mutation UpdateUser($id: ID!,$input: UserUpdateInput!) {
+		userUpdate(by: { id: $id },  input: $input) {
+      user {
+			  id
+        likedProjectIds
+      }
+		}
+	}
 `;
 
 export const createProjectMutation = `
@@ -181,6 +194,7 @@ export const getProjectsOfUserQuery = `
           }
         }
       }
+      likedProjectIds
     }
   }
 `;
