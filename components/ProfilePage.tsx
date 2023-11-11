@@ -56,6 +56,8 @@ const ProfilePage = ({user}: Props) => {
                             name={user.name}
                             avatarUrl={user.avatarUrl}
                             userId={user.id}
+                            likes={node?.likes}
+                            views={node?.views}
                         />
                     )
                 )}
