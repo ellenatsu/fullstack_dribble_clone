@@ -6,7 +6,6 @@ import FormField from "@/components/FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "@/components/CustomMenu";
 import Button from "@/components/Button";
-import { createNewProject, fetchToken, updateProject } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -20,21 +19,21 @@ const ProjectForm = ({ type, session, project }: Props) => {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const { token } = await fetchToken();
-    try {
-      if (type === "create") {
-        //create project
-        await createNewProject(form, session?.user?.id, token);
-        router.push("/");
-      }
-      if ( type === "edit") {
-        //edit project
-        await updateProject(form, project?.id as string, token);
-        router.push("/");
-      } 
-    } catch (error) {
-      console.log(error);
-    }
+    // const { token } = await fetchToken();
+    // try {
+    //   if (type === "create") {
+    //     //create project
+    //     await createNewProject(form, session?.user?.id, token);
+    //     router.push("/");
+    //   }
+    //   if ( type === "edit") {
+    //     //edit project
+    //     await updateProject(form, project?.id as string, token);
+    //     router.push("/");
+    //   } 
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const handleStateChange = (field: string, value: string) => {
@@ -44,17 +43,17 @@ const ProjectForm = ({ type, session, project }: Props) => {
   //gonna upload to cloudinary server
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!file.type.includes("image"))
-      return alert("Please upload an image file");
+    // const file = e.target.files?.[0];
+    // if (!file) return;
+    // if (!file.type.includes("image"))
+    //   return alert("Please upload an image file");
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      handleStateChange("image", result);
-    };
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onloadend = () => {
+    //   const result = reader.result as string;
+    //   handleStateChange("image", result);
+    // };
   };
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -145,6 +144,8 @@ const ProjectForm = ({ type, session, project }: Props) => {
 };
 
 export default ProjectForm;
+
+
 function editProject(form: { image: string; title: string; description: string; liveSiteUrl: string; githubUrl: string; category: string; }, id: string | undefined, token: any) {
   throw new Error("Function not implemented.");
 }

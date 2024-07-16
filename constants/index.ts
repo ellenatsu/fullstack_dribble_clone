@@ -14,7 +14,7 @@ export const categoryFilters = [
 
 export const footerLinks = [
   {
-    title: "For developers",
+    title: "dummy title",
     links: [
       "Go Pro!",
       "Explore development work",
@@ -23,7 +23,7 @@ export const footerLinks = [
     ],
   },
   {
-    title: "Hire developers",
+    title: "dummy title",
     links: [
       "Post a job opening",
       "Post a freelance project",
@@ -31,11 +31,11 @@ export const footerLinks = [
     ],
   },
   {
-    title: "Brands",
+    title: "dummy title",
     links: ["Advertise with us"],
   },
   {
-    title: "Company",
+    title: "dummy title",
     links: [
       "About",
       "Careers",
@@ -43,7 +43,7 @@ export const footerLinks = [
     ],
   },
   {
-    title: "Directories",
+    title: "dummy title",
     links: [
       "Development jobs",
       "Developers for hire",
@@ -51,7 +51,7 @@ export const footerLinks = [
     ],
   },
   {
-    title: "Development assets",
+    title: "dummy title",
     links: [
       "Code Marketplace",
       "GitHub Marketplace",
@@ -60,7 +60,7 @@ export const footerLinks = [
     ],
   },
   {
-    title: "Development Resources",
+    title: "dummy title",
     links: [
       "Freelancing",
       "Development Hiring",
